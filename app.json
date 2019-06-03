@@ -1,0 +1,6 @@
+{
+  "name": "Twilio Verify Node Server",
+  "description": "A sample for implementing the backend needed for supporting the Phone Verification in iOS/mobile apps.",
+  "repository": "https://github.com/robinske/verify-server-node",
+  "keywords": ["node", "express", "heroku", "twilio", "authy", "verify"]
+}
