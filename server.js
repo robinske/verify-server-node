@@ -3,6 +3,7 @@ const express = require('express');
 const authy = require("authy")(process.env.AUTHY_API_KEY);
 
 const app = express();
+const PORT = process.env.PORT;
 
 app.post('/start', (req, res) => {
   country_code = req.query.country_code
@@ -39,6 +40,6 @@ app.post('/check', (req, res) => {
 });
 
 
-http.createServer(app).listen(1337, () => {
-  console.log('Express server listening on port 1337');
+http.createServer(app).listen(PORT, () => {
+  console.log('Express server listening on port ' + PORT);
 });
