@@ -19,7 +19,7 @@ app.post('/start', (req, res) => {
 app.post('/check', (req, res) => {
   countryCode = req.query.country_code
   phoneNumber = req.query.phone_number
-  code = req.query.code
+  code = req.query.verification_code
 
   client.verify.services(process.env.VERIFY_SERVICE_SID)
     .verificationChecks
