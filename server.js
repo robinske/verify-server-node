@@ -27,6 +27,28 @@ app.post('/check', (req, res) => {
     .then(resp => res.json(resp));
 });
 
+app.get('/', (req, res) => {
+  var missing_env_variables = [];
+
+  if (!process.env.TWILIO_ACCOUNT_SID) {
+    console.log("ERROR! `TWILIO_ACCOUNT_SID` not set as env variable.");
+    missing_env_variables.push('TWILIO_ACCOUNT_SID');
+  }
+  if (!process.env.TWILIO_AUTH_TOKEN) {
+    console.log("ERROR! `TWILIO_AUTH_TOKEN` not set as env variable.");
+    missing_env_variables.push('TWILIO_AUTH_TOKEN');
+  }
+  if (!process.env.VERIFY_SERVICE_SID) {
+    console.log("ERROR! `VERIFY_SERVICE_SID` not set as env variable.");
+    missing_env_variables.push('VERIFY_SERVICE_SID');
+  }
+
+  var message = missing_env_variables.length == 0 ? "All set!" : `Missing env variables: ${missing_env_variables.join(", ")}.`
+  res.json({
+    "success": missing_env_variables.length == 0,
+    "message": message
+  })
+})
 
 app.listen(3000, () => {
   console.log('Express server listening on port 3000.');
