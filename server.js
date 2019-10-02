@@ -1,45 +1,33 @@
 const http = require('http');
 const express = require('express');
-const authy = require("authy")(process.env.AUTHY_API_KEY);
+const client = require("twilio")(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 const app = express();
-const PORT = process.env.PORT;
 
 app.post('/start', (req, res) => {
-  country_code = req.query.country_code
-  phone_number = req.query.phone_number
+  countryCode = req.query.country_code
+  phoneNumber = req.query.phone_number
   via = req.query.via
 
-  authy
-    .phones()
-    .verification_start(phone_number, country_code, via, function(err, resp) {
-      if (err) {
-        res.json(err);
-      }
-
-      res.json(resp);
-    });
+  client.verify.services(process.env.VERIFY_SERVICE_SID)
+    .verifications
+    .create({to: `+${countryCode}${phoneNumber}`, channel: via})
+    .then(resp => res.json(resp));
 });
 
 
 app.post('/check', (req, res) => {
-  country_code = req.query.country_code
-  phone_number = req.query.phone_number
+  countryCode = req.query.country_code
+  phoneNumber = req.query.phone_number
   code = req.query.code
 
-  authy
-    .phones()
-    .verification_check(phone_number, country_code, code, function (err, resp) {
-    if (err) {
-      // invalid token  
-      res.json(err);
-    }
-  
-    res.json(resp)
-  });
+  client.verify.services(process.env.VERIFY_SERVICE_SID)
+    .verificationChecks
+    .create({to: `+${countryCode}${phoneNumber}`, code: code})
+    .then(resp => res.json(resp));
 });
 
 
-http.createServer(app).listen(PORT, () => {
-  console.log('Express server listening on port ' + PORT);
+app.listen(3000, () => {
+  console.log('Express server listening on port 3000.');
 });

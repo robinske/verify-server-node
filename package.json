@@ -10,10 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "authy": "^1.4.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "twilio": "^3.35.0"
   },
   "engines": {
     "node": "10.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robinske/verify-server-node"
   }
 }
