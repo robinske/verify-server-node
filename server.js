@@ -43,13 +43,14 @@ app.get('/', (req, res) => {
     missing_env_variables.push('VERIFY_SERVICE_SID');
   }
 
-  var message = missing_env_variables.length == 0 ? "All set!" : `Missing env variables: ${missing_env_variables.join(", ")}.`
+  var message = missing_env_variables.length == 0 ? "All set!" : `Missing env variables: ${missing_env_variables.join(", ")}.`;
+  console.log(message);
   res.json({
     "success": missing_env_variables.length == 0,
     "message": message
-  })
-})
+  });
+});
 
-app.listen(3000, () => {
+app.listen(process.env.port || 3000, () => {
   console.log('Express server listening on port 3000.');
 });
